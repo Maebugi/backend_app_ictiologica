@@ -17,6 +17,11 @@ class Salida(Base):
         ForeignKey("usuarios.usuario_id", onupdate="CASCADE", ondelete="RESTRICT"),
         nullable=False,
     )
+    #Se agfregó la columna nombre_proyecto
+    nombre_proyecto: Mapped[str | None] = mapped_column(
+        String(150),
+        nullable=True
+    )
     nombre_lugar: Mapped[str | None] = mapped_column(String(150), nullable=True)
     fecha_inicio: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     fecha_fin: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)

@@ -9,7 +9,7 @@ class SalidaCreate(BaseModel):
     nombre_lugar: str | None = Field(default=None, max_length=150)
     fecha_inicio: datetime | None = None
     observaciones: str | None = Field(default=None)
-
+    nombre_proyecto: str | None = Field(default=None, max_length=150)
 
 class SalidaResponse(BaseModel):
     salida_id: uuid.UUID
@@ -19,7 +19,7 @@ class SalidaResponse(BaseModel):
     fecha_fin: datetime | None
     observaciones: str | None
     estado: str
-
+    nombre_proyecto: str | None
     model_config = ConfigDict(from_attributes=True)
 
 
@@ -29,6 +29,7 @@ class SalidaFinishRequest(BaseModel):
 
 class SalidaUpdate(BaseModel):
     nombre_lugar: str | None = Field(default=None, max_length=150)
+    nombre_proyecto: str | None = Field(default=None, max_length=150)
     fecha_inicio: datetime | None = None
     fecha_fin: datetime | None = None
     observaciones: str | None = Field(default=None)

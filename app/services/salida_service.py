@@ -40,6 +40,7 @@ def create_new_salida(
         salida_id=salida_data.salida_id,
         id_usuario=current_user.usuario_id,
         nombre_lugar=salida_data.nombre_lugar,
+        nombre_proyecto=salida_data.nombre_proyecto,
         fecha_inicio=salida_data.fecha_inicio or datetime.now(colombia_tz).replace(second=0, microsecond=0),
         observaciones=salida_data.observaciones,
         estado="abierta",

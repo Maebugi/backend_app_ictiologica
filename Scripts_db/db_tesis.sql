@@ -67,6 +67,8 @@ CREATE TABLE salidas (
     fecha_fin       TIMESTAMPTZ,
     observaciones   TEXT,
     nombre_lugar    VARCHAR(150),
+    nombre_proyecto VARCHAR(150),
+    -- tipo_cuerpo_agua VARCHAR(150),
     estado          VARCHAR(20) NOT NULL DEFAULT 'abierta',
 
     CONSTRAINT fk_salidas_usuarios

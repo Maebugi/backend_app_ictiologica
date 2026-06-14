@@ -5,3 +5,4 @@ from app.models.salida import Salida
 from app.models.ocurrencia import Ocurrencia
 from app.models.medicion import Medicion
 from app.models.evidencia_ocurrencia import EvidenciaOcurrencia
+from app.models.salida_evidencia import SalidaEvidencia

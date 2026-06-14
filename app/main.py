@@ -8,6 +8,7 @@ from app.api.v1.salidas import router as salidas_router
 from app.api.v1.ocurrencias import router as ocurrencias_router
 from app.api.v1.mediciones import router as mediciones_router
 from app.api.v1.evidencias import router as evidencias_router
+from app.api.v1.salida_evidencias import router as salida_evidencias_router
 
 app = FastAPI(
     title="API Ictiológica",
@@ -21,5 +22,6 @@ app.include_router(salidas_router, prefix="/api/v1")
 app.include_router(ocurrencias_router, prefix="/api/v1")
 app.include_router(mediciones_router, prefix="/api/v1")
 app.include_router(evidencias_router, prefix="/api/v1")
+app.include_router(salida_evidencias_router, prefix="/api/v1")
 
 app.mount("/storage", StaticFiles(directory="storage"), name="storage")

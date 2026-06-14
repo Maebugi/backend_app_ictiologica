@@ -29,3 +29,8 @@ class Salida(Base):
     estado: Mapped[str] = mapped_column(String(20), nullable=False, default="abierta")
 
     usuario = relationship("User")
+
+    evidencias = relationship(
+    "SalidaEvidencia",
+    cascade="all, delete-orphan",
+    )

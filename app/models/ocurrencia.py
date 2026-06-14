@@ -44,6 +44,7 @@ class Ocurrencia(Base):
     profundidad_maxima: Mapped[float | None] = mapped_column(Float, nullable=True)
     caudal_velocidad: Mapped[float | None] = mapped_column(Float, nullable=True)
     tipo_habitat: Mapped[str | None] = mapped_column(String(50), nullable=True)
+    dinamica_agua: Mapped[str | None] = mapped_column(String(30), nullable=True,)
     microhabitat: Mapped[str | None] = mapped_column(String(50), nullable=True)
     cobertura_dosel: Mapped[float | None] = mapped_column(Float, nullable=True)
     uso_suelo_ribereno: Mapped[str | None] = mapped_column(String(50), nullable=True)
@@ -55,6 +56,7 @@ class Ocurrencia(Base):
     codigo_muestreo: Mapped[str | None] = mapped_column(String(50), nullable=True)
     datum: Mapped[str | None] = mapped_column(String(20), nullable=True)
     observaciones: Mapped[str | None] = mapped_column(Text, nullable=True)
+    dinamica_agua: Mapped[str | None] = mapped_column(String(50), nullable=True)
 
     especie = relationship("Especie")
     salida = relationship("Salida")

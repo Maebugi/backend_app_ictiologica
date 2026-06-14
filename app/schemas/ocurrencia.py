@@ -30,6 +30,7 @@ class OcurrenciaCreate(BaseModel):
     profundidad_maxima: float | None = None
     caudal_velocidad: float | None = None
     tipo_habitat: str | None = Field(default=None, max_length=50)
+    dinamica_agua: str | None = Field(default=None, max_length=50)
     microhabitat: str | None = Field(default=None, max_length=50)
     cobertura_dosel: float | None = None
     uso_suelo_ribereno: str | None = Field(default=None, max_length=50)
@@ -68,6 +69,7 @@ class OcurrenciaResponse(BaseModel):
     profundidad_maxima: float | None
     caudal_velocidad: float | None
     tipo_habitat: str | None
+    dinamica_agua: str | None
     microhabitat: str | None
     cobertura_dosel: float | None
     uso_suelo_ribereno: str | None
@@ -124,6 +126,7 @@ class OcurrenciaUpdate(BaseModel):
     profundidad_maxima: float | None = None
     caudal_velocidad: float | None = None
     tipo_habitat: str | None = Field(default=None, max_length=50)
+    dinamica_agua: str | None = Field(default=None, max_length=50)
     microhabitat: str | None = Field(default=None, max_length=50)
     cobertura_dosel: float | None = None
     uso_suelo_ribereno: str | None = Field(default=None, max_length=50)

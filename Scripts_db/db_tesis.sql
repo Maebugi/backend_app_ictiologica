@@ -116,6 +116,7 @@ CREATE TABLE ocurrencias (
     profundidad_maxima          DOUBLE PRECISION,
     caudal_velocidad            DOUBLE PRECISION,
     tipo_habitat                VARCHAR(50),
+   dinamica_agua                VARCHAR(50), 
     microhabitat                VARCHAR(50),
     cobertura_dosel             DOUBLE PRECISION,
     uso_suelo_ribereno          VARCHAR(50),

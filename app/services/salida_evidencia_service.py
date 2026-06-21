@@ -5,6 +5,7 @@ from pathlib import Path
 
 from fastapi import HTTPException, UploadFile, status
 from sqlalchemy.orm import Session
+from datetime import datetime
 
 from app.models.salida_evidencia import SalidaEvidencia
 from app.models.user import User
@@ -78,11 +79,24 @@ def upload_evidencia_for_salida(
 
     evidencia_id = uuid.uuid4()
 
-    filename = f"{evidencia_id}{extension}"
-
-    file_path = (
-        SALIDA_EVIDENCIAS_DIR / filename
+    codigo_base = (
+    salida.nombre_proyecto
+    or salida.nombre_lugar
+    or str(salida.salida_id)
     )
+
+    codigo_base = (
+    str(codigo_base)
+    .replace(" ", "_")
+    .replace("/", "_")
+    )
+    filename = (
+    f"{codigo_base}_F{datetime.now():%Y%m%d}"
+    f"_H{datetime.now():%H%M%S}"
+    f"{extension}"
+    )
+
+    file_path = SALIDA_EVIDENCIAS_DIR / filename
 
     with file_path.open("wb") as buffer:
         shutil.copyfileobj(file.file, buffer)

@@ -149,6 +149,7 @@ CREATE TABLE ocurrencias (
     codigo_muestreo             VARCHAR(50),
     datum                       VARCHAR(20),
     observaciones               TEXT,
+    estacion_id                   UUID NOT NULL,
 
     CONSTRAINT fk_ocurrencias_especies
         FOREIGN KEY (id_especie)

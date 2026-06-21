@@ -149,7 +149,7 @@ CREATE TABLE ocurrencias (
     codigo_muestreo             VARCHAR(50),
     datum                       VARCHAR(20),
     observaciones               TEXT,
-    estacion_id                   UUID NOT NULL,
+    estacion_id                 UUID,
 
     CONSTRAINT fk_ocurrencias_especies
         FOREIGN KEY (id_especie)
@@ -162,6 +162,12 @@ CREATE TABLE ocurrencias (
         REFERENCES salidas (salida_id)
         ON UPDATE CASCADE
         ON DELETE RESTRICT
+    
+    CONSTRAINT fk_ocurrencia_estacion
+        FOREIGN KEY (estacion_id)
+        REFERENCES estaciones(estacion_id)
+        ON UPDATE CASCADE
+        ON DELETE SET NULL,
 );
 
 -- =========================================================

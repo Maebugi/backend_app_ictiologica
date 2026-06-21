@@ -121,17 +121,49 @@ CREATE TABLE ocurrencias (
         REFERENCES estaciones(estacion_id)
 );
 
-CREATE TABLE mediciones (
-    medicion_id UUID PRIMARY KEY,
-    ocurrencia_id UUID NOT NULL UNIQUE,
-    ph NUMERIC(4,2),
-    observaciones TEXT,
+-- Table: public.mediciones
+
+CREATE TABLE IF NOT EXISTS public.mediciones
+(
+    medicion_id uuid NOT NULL,
+    ocurrencia_id uuid NOT NULL,
+    oxigeno_disuelto_mg_l numeric(8,2),
+    ph numeric(4,2),
+    turbidez_ntu numeric(8,2),
+    conductividad_us_cm numeric(10,2),
+    tds_mg_l numeric(10,2),
+    temperatura_c numeric(5,2),
+    transparencia_secchi_cm numeric(8,2),
+    nivel_estado_agua character varying(50),
+    orp_mv numeric(8,2),
+    alcalinidad_mg_l numeric(10,2),
+    dureza_mg_l numeric(10,2),
+    salinidad numeric(8,2),
+    amonio_mg_l numeric(10,2),
+    fosforo_metales_mg_l numeric(10,2),
+    nitratos_mg_l numeric(10,2),
+    nitritos_mg_l numeric(10,2),
+    fosfatos_mg_l numeric(10,2),
+    clorofila_a_ug_l numeric(10,2),
+    sst_mg_l numeric(10,2),
+    coliformes_fecales_ufc integer,
+    observaciones text,
+    CONSTRAINT mediciones_pkey PRIMARY KEY (medicion_id),
+    CONSTRAINT mediciones_ocurrencia_id_key UNIQUE (ocurrencia_id),
     CONSTRAINT fk_mediciones_ocurrencias
         FOREIGN KEY (ocurrencia_id)
-        REFERENCES ocurrencias(id_ocurrencia)
+        REFERENCES public.ocurrencias (id_ocurrencia)
         ON UPDATE CASCADE
-        ON DELETE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT chk_mediciones_ph
+        CHECK (
+            ph IS NULL
+            OR (ph >= 0 AND ph <= 14)
+        )
 );
+
+CREATE INDEX IF NOT EXISTS idx_mediciones_ocurrencia_id
+    ON public.mediciones (ocurrencia_id);
 
 CREATE TABLE evidencia_ocurrencia (
     id_foto UUID PRIMARY KEY,

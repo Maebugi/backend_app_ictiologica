@@ -63,7 +63,6 @@ CREATE TABLE especies (
 CREATE TABLE salidas (
     salida_id       UUID PRIMARY KEY,
     id_usuario      UUID NOT NULL,
-    estacion_id     UUID,
     fecha_inicio    TIMESTAMPTZ,
     fecha_fin       TIMESTAMPTZ,
     observaciones   TEXT,
@@ -108,7 +107,7 @@ CREATE TABLE ocurrencias (
     estadio_vida                VARCHAR(30),
     condicion_reproductiva      VARCHAR(30),
     comportamiento              VARCHAR(50),
-    anomalias                   TEXT,
+    ano malias                   TEXT,
     mortalidad                  VARCHAR(30),
     vouchers                    VARCHAR(100),
     nivel_certeza               INTEGER,
@@ -256,5 +255,23 @@ CREATE TABLE estaciones (
     activo BOOLEAN NOT NULL DEFAULT TRUE
 );
 
+-- =========================================================
+-- TABLA: salida evidencias
+-- =========================================================
 
+CREATE TABLE salida_evidencia (
+    id_foto UUID PRIMARY KEY,
+    
+    salida_id UUID NOT NULL,
 
+    ruta VARCHAR(255),
+
+    tipo_archivo VARCHAR(20),
+
+    observaciones TEXT,
+
+    CONSTRAINT fk_salida_evidencia_salida
+        FOREIGN KEY (salida_id)
+        REFERENCES salidas(salida_id)
+        ON DELETE CASCADE
+);

@@ -68,7 +68,7 @@ CREATE TABLE salidas (
     observaciones   TEXT,
     nombre_lugar    VARCHAR(150),
     nombre_proyecto VARCHAR(150),
-    -- tipo_cuerpo_agua VARCHAR(150),
+    tipo_cuerpo_agua VARCHAR(150),
     estado          VARCHAR(20) NOT NULL DEFAULT 'abierta',
 
     CONSTRAINT fk_salidas_usuarios
@@ -89,6 +89,26 @@ CREATE TABLE salidas (
 );
 
 -- =========================================================
+-- TABLA: estaciones
+-- =========================================================
+
+CREATE TABLE estaciones (
+    estacion_id UUID PRIMARY KEY,
+
+    codigo VARCHAR(50) NOT NULL UNIQUE,
+
+    nombre VARCHAR(150) NOT NULL,
+
+    cuerpo_agua VARCHAR(150) NOT NULL,
+
+    latitud DOUBLE PRECISION NOT NULL,
+
+    longitud DOUBLE PRECISION NOT NULL,
+
+    activo BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+-- =========================================================
 -- TABLA: ocurrencias
 -- =========================================================
 CREATE TABLE ocurrencias (
@@ -99,7 +119,6 @@ CREATE TABLE ocurrencias (
     coordenadas                 VARCHAR(50),
     latitud                     DOUBLE PRECISION,
     longitud                    DOUBLE PRECISION,
-    id_especie UUID             NOT NULL,
     altitud                     DOUBLE PRECISION,
     esfuerzo                    DOUBLE PRECISION,
     cpue                        DOUBLE PRECISION,
@@ -242,21 +261,7 @@ CREATE INDEX idx_evidencia_id_ocurrencia
 CREATE INDEX idx_fotos_id_especie
 ON fotos (id_especie);
 
-CREATE TABLE estaciones (
-    estacion_id UUID PRIMARY KEY,
 
-    codigo VARCHAR(50) NOT NULL UNIQUE,
-
-    nombre VARCHAR(150) NOT NULL,
-
-    cuerpo_agua VARCHAR(150) NOT NULL,
-
-    latitud DOUBLE PRECISION NOT NULL,
-
-    longitud DOUBLE PRECISION NOT NULL,
-
-    activo BOOLEAN NOT NULL DEFAULT TRUE
-);
 
 -- =========================================================
 -- TABLA: salida evidencias

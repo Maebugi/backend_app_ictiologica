@@ -63,6 +63,7 @@ CREATE TABLE especies (
 CREATE TABLE salidas (
     salida_id       UUID PRIMARY KEY,
     id_usuario      UUID NOT NULL,
+    estacion_id     UUID,
     fecha_inicio    TIMESTAMPTZ,
     fecha_fin       TIMESTAMPTZ,
     observaciones   TEXT,
@@ -238,6 +239,22 @@ CREATE INDEX idx_evidencia_id_ocurrencia
 
 CREATE INDEX idx_fotos_id_especie
 ON fotos (id_especie);
+
+CREATE TABLE estaciones (
+    estacion_id UUID PRIMARY KEY,
+
+    codigo VARCHAR(50) NOT NULL UNIQUE,
+
+    nombre VARCHAR(150) NOT NULL,
+
+    cuerpo_agua VARCHAR(150) NOT NULL,
+
+    latitud DOUBLE PRECISION NOT NULL,
+
+    longitud DOUBLE PRECISION NOT NULL,
+
+    activo BOOLEAN NOT NULL DEFAULT TRUE
+);
 
 
 

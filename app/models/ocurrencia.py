@@ -56,7 +56,27 @@ class Ocurrencia(Base):
     codigo_muestreo: Mapped[str | None] = mapped_column(String(50), nullable=True)
     datum: Mapped[str | None] = mapped_column(String(20), nullable=True)
     observaciones: Mapped[str | None] = mapped_column(Text, nullable=True)
-    dinamica_agua: Mapped[str | None] = mapped_column(String(50), nullable=True)
+
+    latitud: Mapped[float | None] = mapped_column(
+    Float,
+    nullable=True,
+    )
+
+    longitud: Mapped[float | None] = mapped_column(
+        Float,
+        nullable=True,
+    )
+
+    estacion_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True),
+        ForeignKey(
+            "estaciones.estacion_id",
+            onupdate="CASCADE",
+            ondelete="SET NULL",
+        ),
+        nullable=True,
+    )
 
     especie = relationship("Especie")
     salida = relationship("Salida")
+    estacion = relationship("Estacion")

@@ -42,6 +42,9 @@ class OcurrenciaCreate(BaseModel):
     codigo_muestreo: str | None = Field(default=None, max_length=50)
     datum: str | None = Field(default=None, max_length=20)
     observaciones: str | None = None
+    latitud: float | None = None
+    longitud: float | None = None
+    estacion_id: uuid.UUID | None = None
 
 
 class OcurrenciaResponse(BaseModel):
@@ -81,10 +84,14 @@ class OcurrenciaResponse(BaseModel):
     codigo_muestreo: str | None
     datum: str | None
     observaciones: str | None
+    latitud: float | None = None
+    longitud: float | None = None
+    estacion_id: uuid.UUID | None = None
+    codigo_estacion: str | None = None
+    nombre_estacion: str | None = None
     nombre_comun: str | None = None
     nombre_cientifico: str | None = None
     familia: str | None = None
-    
     model_config = ConfigDict(from_attributes=True)
 
 
@@ -96,11 +103,15 @@ class OcurrenciaListItemResponse(BaseModel):
     longitud_pez: float | None
     peso: float | None
     observaciones: str | None
-
+    latitud: float | None = None
+    longitud: float | None = None
+    estacion_id: uuid.UUID | None = None
+    nombre_estacion: str | None = None
     nombre_comun: str | None = None
     nombre_cientifico: str | None = None
     familia: str | None = None
-
+    codigo_estacion: str | None = None
+    nombre_estacion: str | None = None
     model_config = ConfigDict(from_attributes=True)
 
 class OcurrenciaUpdate(BaseModel):
@@ -138,3 +149,6 @@ class OcurrenciaUpdate(BaseModel):
     codigo_muestreo: str | None = Field(default=None, max_length=50)
     datum: str | None = Field(default=None, max_length=20)
     observaciones: str | None = None
+    latitud: float | None = None
+    longitud: float | None = None
+    estacion_id: uuid.UUID | None = None

@@ -14,6 +14,8 @@ from app.repositories.salida_repository import (
     get_salidas_by_user,
     update_salida,
 )
+
+
 from app.schemas.salida import (
     SalidaCreate,
     SalidaFinishRequest,
@@ -22,12 +24,38 @@ from app.schemas.salida import (
 )
 
 
+def build_salida_response(
+    salida: Salida,
+    db: Session,
+) -> SalidaResponse:
+
+
+
+
+
+    return SalidaResponse(
+        salida_id=salida.salida_id,
+        id_usuario=salida.id_usuario,
+        nombre_lugar=salida.nombre_lugar,
+        fecha_inicio=salida.fecha_inicio,
+        fecha_fin=salida.fecha_fin,
+        observaciones=salida.observaciones,
+        estado=salida.estado,
+        nombre_proyecto=salida.nombre_proyecto,
+
+    )
+
 def create_new_salida(
     db: Session,
     salida_data: SalidaCreate,
     current_user: User,
 ) -> SalidaResponse:
-    existing_salida = get_salida_by_id(db, salida_data.salida_id)
+
+    existing_salida = get_salida_by_id(
+        db,
+        salida_data.salida_id,
+    )
+
     if existing_salida:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -41,20 +69,37 @@ def create_new_salida(
         id_usuario=current_user.usuario_id,
         nombre_lugar=salida_data.nombre_lugar,
         nombre_proyecto=salida_data.nombre_proyecto,
-        fecha_inicio=salida_data.fecha_inicio or datetime.now(colombia_tz).replace(second=0, microsecond=0),
+        fecha_inicio=salida_data.fecha_inicio
+        or datetime.now(colombia_tz).replace(
+            second=0,
+            microsecond=0,
+        ),
         observaciones=salida_data.observaciones,
         estado="abierta",
     )
 
-    saved_salida = create_salida(db, new_salida)
-    return SalidaResponse.model_validate(saved_salida)
+    saved_salida = create_salida(
+        db,
+        new_salida,
+    )
+
+    return build_salida_response(
+        saved_salida,
+        db,
+    )
 
 
 def list_user_salidas(db: Session, current_user: User) -> list[SalidaResponse]:
     salidas = get_salidas_by_user(db, current_user.usuario_id)
-    return [SalidaResponse.model_validate(salida) for salida in salidas]
+    return [
+    build_salida_response(
+        salida,
+        db,
+    )
+    for salida in salidas
+]
 
-
+ 
 def get_user_salida_detail(
     db: Session,
     salida_id: uuid.UUID,
@@ -74,7 +119,10 @@ def get_user_salida_detail(
             detail="No tienes permiso para acceder a esta salida.",
         )
 
-    return SalidaResponse.model_validate(salida)
+    return build_salida_response(
+    salida,
+    db,
+)
 
 
 def finish_user_salida(
@@ -112,8 +160,11 @@ def finish_user_salida(
     salida.estado = "cerrada"
 
     updated = update_salida(db, salida)
-    return SalidaResponse.model_validate(updated)
 
+    return build_salida_response(
+        updated,
+        db,
+    )
 
 def update_user_salida(
     db: Session,
@@ -149,9 +200,20 @@ def update_user_salida(
 
     if data.estado is not None:
         salida.estado = data.estado
+    
+    if data.nombre_proyecto is not None:
+        salida.nombre_proyecto = data.nombre_proyecto
+
+    
+
+
 
     updated = update_salida(db, salida)
-    return SalidaResponse.model_validate(updated)
+
+    return build_salida_response(
+        updated,
+        db,
+    )
 
 
 def delete_user_salida(

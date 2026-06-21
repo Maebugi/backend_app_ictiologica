@@ -11,6 +11,7 @@ class SalidaCreate(BaseModel):
     observaciones: str | None = Field(default=None)
     nombre_proyecto: str | None = Field(default=None, max_length=150)
 
+
 class SalidaResponse(BaseModel):
     salida_id: uuid.UUID
     id_usuario: uuid.UUID

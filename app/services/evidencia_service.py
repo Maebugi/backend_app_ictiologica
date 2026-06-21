@@ -2,6 +2,7 @@ import os
 import shutil
 import uuid
 from pathlib import Path
+from datetime import datetime
 
 from fastapi import HTTPException, UploadFile, status
 from sqlalchemy.orm import Session
@@ -55,7 +56,15 @@ def upload_evidencia_for_ocurrencia(
         )
 
     evidencia_id = uuid.uuid4()
-    filename = f"{evidencia_id}{extension}"
+    codigo_base = (
+    ocurrencia.codigo_muestreo
+    or str(ocurrencia.id_ocurrencia)
+        )
+    filename = (
+    f"{codigo_base}_F{datetime.now():%Y%m%d}"
+    f"_H{datetime.now():%H%M%S}"
+    f"{extension}"
+)
     file_path = EVIDENCIAS_DIR / filename
 
     with file_path.open("wb") as buffer:

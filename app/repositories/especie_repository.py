@@ -19,3 +19,15 @@ def search_species(db: Session, query: str) -> list[Especie]:
         .order_by(Especie.nombre_cientifico.asc())
     )
     return list(db.scalars(stmt).all())
+
+
+def get_species_by_id(
+    db: Session,
+    especie_id,
+) -> Especie | None:
+    stmt = (
+        select(Especie)
+        .where(Especie.especie_id == especie_id)
+    )
+
+    return db.scalar(stmt)

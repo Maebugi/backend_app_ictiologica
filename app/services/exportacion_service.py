@@ -295,6 +295,68 @@ def _crear_hoja_evidencias_salidas(
             ])
 
 
+def _crear_hoja_darwin_core(
+    wb: Workbook,
+    datos: dict,
+) -> None:
+
+    ws = wb.create_sheet(
+        title="Darwin_Core",
+    )
+
+    ws.append([
+        "eventID",
+        "eventDate",
+        "eventTime",
+        "decimalLatitude",
+        "decimalLongitude",
+        "samplingProtocol",
+        "samplingEffort",
+        "scientificName",
+        "individualCount",
+        "organismMeasurementValue_Length",
+        "organismMeasurementValue_Weight",
+        "recordedBy",
+        "occurrenceID",
+    ])
+
+    for item in datos["ocurrencias"]:
+
+        salida = item["salida"]
+        ocurrencia = item["ocurrencia"]
+        especie = item["especie"]
+
+        ws.append([
+            ocurrencia.codigo_muestreo
+                if ocurrencia.codigo_muestreo
+                else str(salida.salida_id),
+
+            ocurrencia.fecha_hora.strftime("%Y-%m-%d")
+                if ocurrencia.fecha_hora else "",
+
+            ocurrencia.fecha_hora.strftime("%H:%M:%S")
+                if ocurrencia.fecha_hora else "",
+
+            ocurrencia.latitud,
+            ocurrencia.longitud,
+
+            ocurrencia.metodo_captura,
+
+            ocurrencia.esfuerzo,
+
+            especie.nombre_cientifico if especie else "",
+
+            "",
+
+            ocurrencia.longitud_pez,
+
+            ocurrencia.peso,
+
+            datos["usuario"].nombre,
+
+            str(ocurrencia.id_ocurrencia),
+        ])
+
 def _crear_excel(
     export_dir: Path,
     datos: dict,
@@ -327,7 +389,12 @@ def _crear_excel(
     _crear_hoja_evidencias_salidas(
         wb,
         datos,
-)
+    )
+
+    _crear_hoja_darwin_core(
+    wb,
+    datos,
+    )
 
     # Próximamente
     # _crear_hoja_ocurrencias(wb, datos)
